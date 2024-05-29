@@ -8,13 +8,13 @@ const morgan = require("morgan");
 
 const validator = require('validator')
 
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
 
 // define middleware
 app.use(morgan('dev'));
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
 
 // 1. Be Polite, Greet the User
 
@@ -25,13 +25,14 @@ app.use('/greetings/:username', (req, res) => {
 
 // 2. Rolling the Dice
 
-app.get('/roll/:number', (req, res, next) => {
-    // const number = req.params.number;
-    if (req.query.number === isNaN(number)) {
-        res.send(`You rolled a ${req.params.number}!`)
+app.get('/roll/:diceNumber', (req, res) => {
+    const number = req.params.diceNumber
+
+    if (isNaN(number)) {
+        res.send('You must specify a number');
     } else {
-        res.send('You must specify a number')
-    }    
+        res.send(`You rolled a ${req.params.diceNumber}`)
+    }
 });
 
 
